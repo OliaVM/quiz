@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Homework3</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+  	<link rel="stylesheet" href="css/style.css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+  	<script src="js/script.js"></script>
+  	<script>
+
+   /*
+
+    !!! Имя объекта и имена методов должны быть таким как я написал !!!
+
+    1) Создать объект c именем work
+    
+    2) У этого объекта создать метод show. 
+    Внутри этого метода вызвать внешнию функцию с именем showAllCountries и передать список всех стран (страны находятся в объекте countries, структуру можно посмотреть в файле structure.json), если все сделаете правильно, то странице у вас появиться возможность выбирать страну 
+    (вызывать этот метод не нужно, я уже сам прописал его вызов).
+    
+    3) Создать метод citiesCount, который принимает чило и выводит его в alert.
+
+    4) Создать метод showCities, который будет принимать название страны в виде строки. 
+    В цикле вывести в консоль города этой страны (не забываем что страны и города находятся в объекте countries). 
+    И вызываем метод citiesCount этого объекта, в который передаем кол-во городов этой страны.
+
+    Если сделаете правильно, то список городов в консоли и кол-во городов в алерте должен совпадать со списком городов на странице.
+
+   */
+
+  	// СВОЙ КОД ПИШЕМ ЗДЕСЬ ↓
+  	var work={     
+  		show: function() {
+	        var keys1 = Object.keys(countries); // список стран
+	        //console.log(keys1);
+	  		showAllCountries(keys1);
+      	},
+      	citiesCount: function(counter) {
+			alert(counter);
+	    },
+	    showCities: function(ourCountry) {
+  			var ourCountry = countries[ourCountry];
+      	for (var i = 0; i < ourCountry.length; i++) {
+  			console.log(ourCountry[i]);	
+  		}
+        work.citiesCount(ourCountry.length);
+  		}
+  	};
+   	</script>
+
+</head>
+<body>
+<div class="dropdown pull-left">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+    Выберите страну
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="country">
+
+  </ul>
+</div>
+<div class="city-info">
+  <div>
+    Вы выбрали - <span id="u-chose">ничего</span>
+  </div>
+  В этой стране:
+  <span id="city-count">нет</span>
+  <em>городов</em>
+</div>
+<ul class="list-group pull-right" id="city-list"></ul>
+<script src="js/my.js"></script>
+</body>
+</html>
