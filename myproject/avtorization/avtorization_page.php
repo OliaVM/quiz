@@ -14,7 +14,7 @@
 		<h2 class="redcolor"><?php echo $exAvtoriz8; ?></h2>
 <?php	endif; ?> 
 <?php if (isset($_SESSION['login']) && isset($_SESSION['password'])): ?>
-<a href="/index.php">Начать викторину</a> 
+<a href="/index.php">Начать викторину</a><br>
 <?php endif; ?>
 <a href="/index.php">Перейти на главную страницу</a> 
 <?php require_once '/var/www/html/myproject/common/footer.php'; ?> 

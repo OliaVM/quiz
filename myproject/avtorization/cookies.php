@@ -15,6 +15,7 @@
 				$_SESSION['auth'] = true; 
 				$_SESSION['id'] = $rowUser['id']; 
 				$_SESSION['login'] = $rowUser['login']; 
+				$_SESSION['user_id'] = $rowUser['user_id']; 
 			}
 		}
 	}

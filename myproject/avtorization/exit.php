@@ -3,6 +3,8 @@ session_start();
 if (!empty($_SESSION['id']) and isset($_SESSION['id'])) {
 	// destroy of the session
 	unset($_SESSION['count']);
+	unset($_SESSION['login']);
+	unset($_SESSION['password']);
 	session_destroy();
 	   
     //Delete the cookies

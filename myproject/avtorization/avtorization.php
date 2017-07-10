@@ -22,13 +22,14 @@ if (isset($_POST['submit'])) {
 						if ($rowUser['password'] == $saltedPassword) {
 							// Write to the session information about avtorization
 							$_SESSION['auth'] = true; 
+							$_SESSION['user_id'] = $rowUser['user_id']; 
 							$_SESSION['id'] = $rowUser['id']; 
 							$_SESSION['login'] = $rowUser['login']; 
 							$_SESSION['password'] = $rowUser['password']; 
+							//var_dump($rowUser['login']); 
 							
-
 							//Verify whether the checkbox 'Remember me' is clicked 
-							if ( !empty($_REQUEST['remember']) and $_REQUEST['remember'] == 1 ) {
+							if (!empty($_REQUEST['remember']) and $_REQUEST['remember'] == 1 ) {
 								$key = generateSalt(); 
 								setcookie('login', $rowUser['login'], time()+60*60*24*30); 
 								setcookie('key', $key, time()+60*60*24*30); 
@@ -73,5 +74,69 @@ if (isset($_POST['submit'])) {
 	catch (Exception $ex8) {
 		//Print the exception message
 		$exAvtoriz8 = $ex8->getMessage();
+	}
+}
+
+/*
+if (isset($_POST['button'])) { 
+	if (isset($_SESSION['login']) && isset($_SESSION['password'])) {
+
+							$_SESSION['var'] = [];
+							$sql0 = 'SELECT question_number_id FROM questions';
+							$sth0 = $basa->query($sql0);
+							//$row0 = $sth0->fetch(PDO::FETCH_ASSOC); //Преобразуем ответ из БД в строку массива
+							$row0 = $sth0->fetchAll(PDO::FETCH_COLUMN);
+							for ($i = 0; $i < count($row0); $i++) {
+								$z = $i + 1;
+								$z = (string)$z;
+								if (isset($_POST['btn_ans'.$z])) {
+									
+									
+									$_SESSION['var'][$i] = $_POST['btn_ans'.$z];
+									echo "z";
+									var_dump($_POST['btn_ans'.$z]);
+									var_dump($_SESSION['var'][$i]);
+									$z = (int)$z;
+								}
+							}
+							//if (isset($_POST['btn_ans'.$i])) {
+								//$_SESSION['var'] = $_POST['btn_ans'.$i];
+	}
+}
+*/
+
+if (isset($_POST['button'])) { 
+	if (isset($_SESSION['login']) && isset($_SESSION['password'])) {
+
+							$_SESSION['var'] = [];
+							$sql0 = 'SELECT question_number_id FROM questions';
+							$sth0 = $basa->query($sql0);
+							$row0 = $sth0->fetchAll(PDO::FETCH_COLUMN); //количество вопросов
+							$z = 0;
+							for ($i = 0; $i < count($row0); $i++) {
+								$z = $z + 1;
+								$z = (string)$z;
+								if (isset($_POST['btn_ans'.$z])) {
+									$_SESSION['var'][$i] = $_POST['btn_ans'.$z];
+									//echo "z";
+									//var_dump($_POST['btn_ans'.$z]);
+									//var_dump($_SESSION['var'][$i]);
+									$z = (int)$z;
+
+								}
+							}
+							$_SESSION['answer'] = [];
+							for ($i = 0; $i < count($row0); $i++) {
+								$z = $i + 1;
+								$z = (string)$z;
+								if (isset($_POST["answer_from_form".$z])) {
+									$_SESSION['answer'][$i] = $_POST["answer_from_form".$z];
+									//echo "answer";
+									//var_dump($_POST["answer_from_form".$z]);
+									//var_dump($_SESSION['answer'][$i]);
+									$z = (int)$z;
+								}
+							}
+						
 	}
 }
