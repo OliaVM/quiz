@@ -8,7 +8,7 @@ if (isset($_POST['submit'])) {
 			$login = $_REQUEST['login']; 
 			$password = $_REQUEST['password']; 
 			$sql = 'SELECT * FROM users WHERE login="'.$login.'"';
-			$sth = $basa->query($sql);
+			$sth = $connect->query($sql);
 			$rowUser = $sth->fetch(PDO::FETCH_ASSOC); //Преобразуем ответ из БД в строку массива
 						
 			try {
@@ -26,8 +26,7 @@ if (isset($_POST['submit'])) {
 							$_SESSION['id'] = $rowUser['id']; 
 							$_SESSION['login'] = $rowUser['login']; 
 							$_SESSION['password'] = $rowUser['password']; 
-							//var_dump($rowUser['login']); 
-							
+														
 							//Verify whether the checkbox 'Remember me' is clicked 
 							if (!empty($_REQUEST['remember']) and $_REQUEST['remember'] == 1 ) {
 								$key = generateSalt(); 
@@ -35,7 +34,7 @@ if (isset($_POST['submit'])) {
 								setcookie('key', $key, time()+60*60*24*30); 
 								
 								$sql = 'UPDATE users SET cookie="'.$key.'" WHERE login="'.$login.'"';
-								$keys = $basa->query($sql);
+								$keys = $connec->query($sql);
 							}
 							//Counter sessions
 							if (!isset($_SESSION['count'])) {
@@ -77,66 +76,33 @@ if (isset($_POST['submit'])) {
 	}
 }
 
-/*
+//Запоминаем введенные пользователем ответы на вопросы и номера вопросов
 if (isset($_POST['button'])) { 
 	if (isset($_SESSION['login']) && isset($_SESSION['password'])) {
+		//Записываем в сессию номера вопросов
+		$_SESSION['var'] = [];
+		$sql0 = 'SELECT question_number_id FROM questions';
+		$sth0 = $connect->query($sql0);
+		$row0 = $sth0->fetchAll(PDO::FETCH_COLUMN); //количество вопросов
+		$z = 0;
+		for ($i = 0; $i < count($row0); $i++) {
+			$z = $z + 1;
+			$z = (string)$z;
+			if (isset($_POST['btn_ans'.$z])) {
+				$_SESSION['var'][$i] = $_POST['btn_ans'.$z];
+				$z = (int)$z;
+			}
+		}
 
-							$_SESSION['var'] = [];
-							$sql0 = 'SELECT question_number_id FROM questions';
-							$sth0 = $basa->query($sql0);
-							//$row0 = $sth0->fetch(PDO::FETCH_ASSOC); //Преобразуем ответ из БД в строку массива
-							$row0 = $sth0->fetchAll(PDO::FETCH_COLUMN);
-							for ($i = 0; $i < count($row0); $i++) {
-								$z = $i + 1;
-								$z = (string)$z;
-								if (isset($_POST['btn_ans'.$z])) {
-									
-									
-									$_SESSION['var'][$i] = $_POST['btn_ans'.$z];
-									echo "z";
-									var_dump($_POST['btn_ans'.$z]);
-									var_dump($_SESSION['var'][$i]);
-									$z = (int)$z;
-								}
-							}
-							//if (isset($_POST['btn_ans'.$i])) {
-								//$_SESSION['var'] = $_POST['btn_ans'.$i];
-	}
-}
-*/
-
-if (isset($_POST['button'])) { 
-	if (isset($_SESSION['login']) && isset($_SESSION['password'])) {
-
-							$_SESSION['var'] = [];
-							$sql0 = 'SELECT question_number_id FROM questions';
-							$sth0 = $basa->query($sql0);
-							$row0 = $sth0->fetchAll(PDO::FETCH_COLUMN); //количество вопросов
-							$z = 0;
-							for ($i = 0; $i < count($row0); $i++) {
-								$z = $z + 1;
-								$z = (string)$z;
-								if (isset($_POST['btn_ans'.$z])) {
-									$_SESSION['var'][$i] = $_POST['btn_ans'.$z];
-									//echo "z";
-									//var_dump($_POST['btn_ans'.$z]);
-									//var_dump($_SESSION['var'][$i]);
-									$z = (int)$z;
-
-								}
-							}
-							$_SESSION['answer'] = [];
-							for ($i = 0; $i < count($row0); $i++) {
-								$z = $i + 1;
-								$z = (string)$z;
-								if (isset($_POST["answer_from_form".$z])) {
-									$_SESSION['answer'][$i] = $_POST["answer_from_form".$z];
-									//echo "answer";
-									//var_dump($_POST["answer_from_form".$z]);
-									//var_dump($_SESSION['answer'][$i]);
-									$z = (int)$z;
-								}
-							}
-						
+		//Записываем в сессию ответы пользователя
+		$_SESSION['answer'] = [];
+		for ($i = 0; $i < count($row0); $i++) {
+		$z = $i + 1;
+		$z = (string)$z;
+			if (isset($_POST["answer_from_form".$z])) {
+				$_SESSION['answer'][$i] = $_POST["answer_from_form".$z];
+				$z = (int)$z;
+			}
+		}
 	}
 }

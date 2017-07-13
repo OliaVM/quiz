@@ -7,7 +7,7 @@
 			$key = $_COOKIE['key']; 
 		
 			$sql = 'SELECT*FROM users WHERE login="'.$login.'" AND cookie="'.$key.'"';
-			$sth = $basa->query($sql);
+			$sth = $connec->query($sql);
 			$rowUser = $sth->fetch(PDO::FETCH_ASSOC); //String of array
 
 			//If the database returned not empty response - login and key from cookies no true

@@ -15,7 +15,7 @@ if (isset($_POST['submit2'])) {
 					
 			// Performs the validation to freedom login. The response from the database record into a variable $row
 			$sql = 'SELECT * FROM users  WHERE login="'.$login.'"';
-			$isLoginFree = $basa->query($sql);
+			$isLoginFree = $connect->query($sql);
 			$row = $isLoginFree->fetch(PDO::FETCH_ASSOC);
 						
 			try {
@@ -27,8 +27,8 @@ if (isset($_POST['submit2'])) {
 
 					// Added information to the database from the form
 					$sql2 = 'INSERT INTO users SET login="'.$login.'", password="'.$saltedPassword.'", salt="'.$salt.'", email="'.$email.'", name="'.$name.'", surname="'.$surname.'", date_of_birth="'.$date_of_birth.'", gender="'.$gender.'"';
-					$prep = $basa->prepare($sql2);
-					$basa->query($sql2);
+					$prep = $connect->prepare($sql2);
+					$connect->query($sql2);
 					//The message about the successful registration
 					echo 'Вы успешно зарегистрированы!';
 				}
