@@ -1,42 +1,26 @@
 		
-	<div class="row-fluid">
-	    <div class="span10" id="box2">
+	
 	    	<ul>
 				<li><a href="/index.php">Главная</a></li>
 				<?php if (!isset($_SESSION['login'])): ?>
-				<li><a href="http://myproject.local/avtorization/entrance_page.php">Авторизуйтесь или зарегистрируйтесь, чтобы начать викторину</a></li>
+					<li><a href="/index.php?page_name=entrance_page">Авторизуйтесь или зарегистрируйтесь, чтобы начать викторину</a></li>
 				<?php endif; ?>
 				<?php if (isset($_SESSION['login']) && isset($_SESSION['password'])): ?>
 					<h2>Выберите тему викторины: </h2>
-					<li><a href="http://myproject.local/index.php?subject_go=литература">Литература</a></li>
-					<li><a href="http://myproject.local/index.php?subject_go=история">История</a></li>
+					<li><a href="/index.php?subject_go=литература">Литература</a></li>
+					<li><a href="/index.php?subject_go=история">История</a></li>
 					<!-- <li>Лучшие результаты</li> -->
 				<?php endif; ?>
 			</ul> 
 		</div>
 	</div>
 	
-	<!-- 
-	<form method="post">
-							Выберите тему викторины: <br>
-							<SELECT name = "subject">
-								<OPTION value = "литература">Литература 
-								<OPTION value = "история">История 
-								<OPTION value = "mathematics">Математика 
-							</SELECT> 
-							<br>
-							<input type="submit" name="quiz_theme_go" value="выбрать">
-	</form>
-	-->
-	<?php //if(isset($_POST['quiz_theme_go'])): ?>
-	<!-- <li><a href="<?php //echo "http://myproject.local/index.php?subject_go=" . $subject; ?>"><?php //echo $str; ?></a></li> -->
-	<?php //endif; ?>
-
 	<!-- Выход -->
 	<?php if (isset($_SESSION['login']) && isset($_SESSION['password'])): ?>
 		<div class="row-fluid">
-		    <div class="span10" id="box2">
-				<?php require_once '/var/www/html/src/core/form/exit_button.php'; ?>
+		    <div class="span10" id="box3">
+				<?php $exitController = new ExitController(); ?>
+				<?php $exitController->actionExit(); ?>
 			</div>
 		</div>
 	<?php endif; ?>	
@@ -62,9 +46,7 @@
 					</form>
 				<?php endif; ?>	
 			<?php endif; ?>
-			
-		</div>
-	</div>
+
 
 
 

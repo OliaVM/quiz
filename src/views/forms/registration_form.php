@@ -17,7 +17,7 @@
 						</div>
 					<?php else: echo "Вы уже авторизованы"; ?>
 					<?php endif; ?>
-					<div>
+					
 
 
 
